@@ -1,0 +1,16 @@
+{
+  "name": "gobarber",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "Back-End do GoStack - Bootcamp GoStack 8.0",
+  "keywords": [],
+  "author": {
+    "name": "Gabriel Jony",
+    "email": "gabriel_jony@hotmail.com",
+    "url": "https://gabrieljony.github.io/index.html"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
