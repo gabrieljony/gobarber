@@ -6,6 +6,36 @@ server.use(express.json());
 
 const users = ["Gabriel", "Diego", "Pedro", "Victor", "José"];
 
+//Middleware -  é um interceptador
+server.use((req, res, next) => {
+  console.time("Request");
+  console.log("A requisição foi chamada!");
+  console.log(`Método: ${req.method}; URL: ${req.url}`);
+
+  next(); //continuar executando os próximos middleware abaixo
+
+  console.timeEnd("Request"); //tempo da requisição
+});
+
+function checkUserExists(req, res, next) {
+  if (!req.body.name) {
+    return res.status(400).json({ error: "User not found on request body." });
+  }
+
+  return next();
+}
+
+function checkUserInArray(req, res, next) {
+  const user = users[req.params.id];
+  if (!user) {
+    return res.status(400).json({ error: "User does not exist." });
+  }
+
+  req.user = user;
+
+  return next();
+}
+
 //Query params = ?teste=1
 //Route params = /users/1
 //Request boby = { "name": "Gabriel", "email": "gabriel_jony@hotmail.com"}
@@ -23,13 +53,12 @@ server.get("/users", (req, res) => {
 });
 
 //Busca por usuário, passando como parâmetro o id
-server.get("/user/:id", (req, res) => {
-  const { id } = req.params;
-  return res.json(users[id]);
+server.get("/user/:id", checkUserInArray, (req, res) => {
+  return res.json(req.user);
 });
 
 //Criação de um novo usuário
-server.post("/users", (req, res) => {
+server.post("/users", checkUserExists, (req, res) => {
   const { name } = req.body;
 
   users.push(name);
@@ -38,7 +67,7 @@ server.post("/users", (req, res) => {
 });
 
 //Edição de um usuário já cadastrado
-server.put("/user/:id", (req, res) => {
+server.put("/user/:id", checkUserExists, checkUserInArray, (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
 
@@ -47,7 +76,7 @@ server.put("/user/:id", (req, res) => {
 });
 
 //Deletar um usuário
-server.delete("/user/:id", (req, res) => {
+server.delete("/user/:id", checkUserInArray, (req, res) => {
   const { id } = req.params;
 
   users.splice(id, 1);
