@@ -10,7 +10,14 @@
     "email": "gabriel_jony@hotmail.com",
     "url": "https://gabrieljony.github.io/index.html"
   },
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4",
+    "sucrase": "^3.10.1"
   }
 }
