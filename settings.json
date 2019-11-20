@@ -1,0 +1,32 @@
+//Arquivo de configurações do VsCode - f1 > settings.json Preference Open Settings
+{
+  "window.zoomLevel": 0,
+  "files.autoSave": "afterDelay",
+  "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+  "workbench.iconTheme": "vscode-icons",
+
+  // Configura tamanho e familia da fonte
+  "editor.formatOnSave": true,
+
+  // Aplica linhas verticais para lembrar de quabrar linha em códigos
+  "prettier.eslintIntegration": true,
+  "terminal.explorerKind": "external",
+  "workbench.startupEditor": "newUntitledFile",
+  "git.confirmSync": false,
+  "liveServer.settings.donotVerifyTags": true,
+  "workbench.colorTheme": "Dracula",
+
+  // limite de linha no código
+  "editor.rulers": [80, 120],
+  "editor.tabSize": 2,
+  "editor.renderLineHighlight": "gutter",
+  "terminal.integrated.fontSize": 16,
+  "emmet.syntaxProfiles": {
+      "javascript": "jsx"
+  },
+  "emmet.includeLanguages": {
+      "javascript": "javascriptreact"
+  },
+  "breadcrumbs.enabled": true
+  
+}
