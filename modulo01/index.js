@@ -2,7 +2,7 @@ const express = require("express");
 
 const server = express();
 
-const users = ['Gabriel', 'Diego', 'Pedro', 'Victor']
+const users = ['Gabriel', 'Diego', 'Pedro', 'Victor', 'José']
 
 //Query params = ?teste=1
 //Route params = /users/1
