@@ -1,7 +1,25 @@
+import * as Yup from 'yup';
+
 import User from '../models/User';
 
 class UserController {
   async store(req, res) {
+    //Validação com o Yup
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string()
+        .email()
+        .required(),
+      password: Yup.string()
+        .min(6)
+        .required(),
+    });
+
+    //Se der erro na validação status 400
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const userExists = await User.findOne({
       where: {
         email: req.body.email,
@@ -21,7 +39,28 @@ class UserController {
     });
   }
 
+  //EDIÇÃO do usuário
   async update(req, res) {
+    //Validação com o Yup
+    const schema = Yup.object().shape({
+      name: Yup.string(),
+      email: Yup.string().email(),
+      oldPassword: Yup.string().min(6),
+      password: Yup.string()
+        .min(6)
+        .when('oldPassword', (oldPassword, field) => {
+          return oldPassword ? field.required() : field;
+        }),
+      confirmPassword: Yup.string().when('password', (password, field) => {
+        return password ? field.required().oneOf([Yup.ref('password')]) : field;
+      }),
+    });
+
+    //Se der erro na validação status 400
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const { email, oldPassword } = req.body;
 
     const user = await User.findByPk(req.userId);
